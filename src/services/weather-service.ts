@@ -20,12 +20,12 @@ export default class WeatherService {
     }
   }
 
-  async getWeather(lat: number, lon: number): Promise<IWeatherResponse[]> {
+  async getWeather(lat: number, lon: number): Promise<IWeatherResponse | null> {
     try {
       const apiKey = config.OPENWEATHERMAP_API_KEY;
       if (!apiKey) throw new Error('Missing OPENWEATHERMAP_API_KEY environment variable');
 
-      const weatherResponse = await axios.get<IWeatherResponse[]>(
+      const weatherResponse = await axios.get<IWeatherResponse>(
         `${config.API_URL}/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
       );
 
@@ -33,16 +33,16 @@ export default class WeatherService {
       return weatherResponse.data;
     } catch (error) {
       console.error('Error fetching weather:', error);
-      return [];
+      return null;
     }
   }
 
-  async forecast(lat: number, lon: number): Promise<IWeatherResponse[]> {
+  async forecast(lat: number, lon: number): Promise<IWeatherResponse | null> {
     try {
       const apiKey = config.OPENWEATHERMAP_API_KEY;
       if (!apiKey) throw new Error('Missing OPENWEATHERMAP_API_KEY environment variable');
 
-      const weatherResponse = await axios.get<IWeatherResponse[]>(
+      const weatherResponse = await axios.get<IWeatherResponse>(
         `${config.API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`
       );
 
@@ -50,7 +50,7 @@ export default class WeatherService {
       return weatherResponse.data;
     } catch (error) {
       console.error('Error fetching weather:', error);
-      return [];
+      return null;
     }
   }
 }
