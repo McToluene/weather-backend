@@ -20,8 +20,9 @@ export default (app: Router, weatherService: WeatherService) => {
     if (isNaN(lat) || isNaN(lon))
       return res.status(400).send('Valid latitude and longitude are required');
 
-    const cities = await weatherService.getWeather(lat, lon);
-    return res.status(200).json(cities);
+    const weather = await weatherService.getWeather(lat, lon);
+    if (weather === null) return res.status(404).json('Weather not found');
+    return res.status(200).json(weather);
   });
 
   route.get('/forecast', async (req: Request, res: Response) => {
@@ -31,7 +32,8 @@ export default (app: Router, weatherService: WeatherService) => {
     if (isNaN(lat) || isNaN(lon))
       return res.status(400).send('Valid latitude and longitude are required');
 
-    const cities = await weatherService.forecast(lat, lon);
-    return res.status(200).json(cities);
+    const forecast = await weatherService.forecast(lat, lon);
+    if (forecast === null) res.status(404).json('Forecast not found!');
+    return res.status(200).json(forecast);
   });
 };
