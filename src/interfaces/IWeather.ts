@@ -1,106 +1,73 @@
-interface IWeather {
-  lat: number;
-  lon: number;
-  timezone: string;
-  timezone_offset: number;
-  current: CurrentWeather;
-  minutely?: MinutelyWeather[];
-  hourly?: HourlyWeather[];
-  daily?: DailyWeather[];
-  alerts?: WeatherAlert[];
+interface IWeatherResponse {
+  cod: string;
+  message: number;
+  cnt: number;
+  list: WeatherData[];
+  city: City;
 }
 
-interface CurrentWeather {
+interface WeatherData {
   dt: number;
-  sunrise: number;
-  sunset: number;
+  main: Main;
+  weather: Weather[];
+  clouds: Clouds;
+  wind: Wind;
+  visibility: number;
+  pop: number;
+  rain?: Rain;
+  sys: Sys;
+  dt_txt: string;
+}
+
+interface Main {
   temp: number;
   feels_like: number;
+  temp_min: number;
+  temp_max: number;
   pressure: number;
+  sea_level: number;
+  grnd_level: number;
   humidity: number;
-  dew_point: number;
-  uvi: number;
-  clouds: number;
-  visibility: number;
-  wind_speed: number;
-  wind_deg: number;
-  wind_gust: number;
-  weather: WeatherDescription[];
+  temp_kf: number;
 }
 
-interface MinutelyWeather {
-  dt: number;
-  precipitation: number;
-}
-
-interface HourlyWeather {
-  dt: number;
-  temp: number;
-  feels_like: number;
-  pressure: number;
-  humidity: number;
-  dew_point: number;
-  uvi: number;
-  clouds: number;
-  visibility: number;
-  wind_speed: number;
-  wind_deg: number;
-  wind_gust: number;
-  weather: WeatherDescription[];
-  pop: number;
-}
-
-interface DailyWeather {
-  dt: number;
-  sunrise: number;
-  sunset: number;
-  moonrise: number;
-  moonset: number;
-  moon_phase: number;
-  summary: string;
-  temp: DailyTemperature;
-  feels_like: DailyFeelsLike;
-  pressure: number;
-  humidity: number;
-  dew_point: number;
-  wind_speed: number;
-  wind_deg: number;
-  wind_gust: number;
-  weather: WeatherDescription[];
-  clouds: number;
-  pop: number;
-  rain?: number;
-  uvi: number;
-}
-
-interface DailyTemperature {
-  day: number;
-  min: number;
-  max: number;
-  night: number;
-  eve: number;
-  morn: number;
-}
-
-interface DailyFeelsLike {
-  day: number;
-  night: number;
-  eve: number;
-  morn: number;
-}
-
-interface WeatherDescription {
+interface Weather {
   id: number;
   main: string;
   description: string;
   icon: string;
 }
 
-interface WeatherAlert {
-  sender_name: string;
-  event: string;
-  start: number;
-  end: number;
-  description: string;
-  tags: string[];
+interface Clouds {
+  all: number;
+}
+
+interface Wind {
+  speed: number;
+  deg: number;
+  gust: number;
+}
+
+interface Rain {
+  '3h': number;
+}
+
+interface Sys {
+  pod: string;
+}
+
+interface City {
+  id: number;
+  name: string;
+  coord: Coord;
+  country: string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
+}
+
+interface Coord {
+  lat: number;
+  lon: number;
 }

@@ -9,7 +9,7 @@ export default class WeatherService {
       if (!apiKey) throw new Error('Missing OPENWEATHERMAP_API_KEY environment variable');
 
       const response = await axios.get<ILocation[]>(
-        `${config.API_URL}/onecall?q=${cityName}&appid=${apiKey}`
+        `${config.GEOLOCATION_URL}?q=${cityName}&appid=${apiKey}`
       );
 
       if (!response.data) throw new Error('City not found or invalid response');
@@ -20,13 +20,13 @@ export default class WeatherService {
     }
   }
 
-  async getWeathers(lat: number, lon: number): Promise<IWeather[]> {
+  async getWeather(lat: number, lon: number): Promise<IWeatherResponse[]> {
     try {
       const apiKey = config.OPENWEATHERMAP_API_KEY;
       if (!apiKey) throw new Error('Missing OPENWEATHERMAP_API_KEY environment variable');
 
-      const weatherResponse = await axios.get<IWeather[]>(
-        `${config.API_URL}/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
+      const weatherResponse = await axios.get<IWeatherResponse[]>(
+        `${config.API_URL}/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
       );
 
       if (!weatherResponse.data) throw new Error('Weather not found or invalid response');
@@ -37,13 +37,13 @@ export default class WeatherService {
     }
   }
 
-  async getWeather(lat: number, lon: number): Promise<IWeather[]> {
+  async forecast(lat: number, lon: number): Promise<IWeatherResponse[]> {
     try {
       const apiKey = config.OPENWEATHERMAP_API_KEY;
       if (!apiKey) throw new Error('Missing OPENWEATHERMAP_API_KEY environment variable');
 
-      const weatherResponse = await axios.get<IWeather[]>(
-        `${config.API_URL}/onecall?lat=${lat}&lon=${lon}&date=${Date.now}&appid=${apiKey}`
+      const weatherResponse = await axios.get<IWeatherResponse[]>(
+        `${config.API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`
       );
 
       if (!weatherResponse.data) throw new Error('Weather not found or invalid response');
